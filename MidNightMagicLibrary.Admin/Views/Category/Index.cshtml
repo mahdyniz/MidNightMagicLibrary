@@ -1,0 +1,13 @@
+﻿@using MidNightMagicLibrary.Models
+@model IEnumerable<Category>
+
+<div class="mt-4 mb-5">
+    <h1>Categories</h1>
+</div>
+
+@foreach (Category category in Model)
+{
+    <p>@category.Name</p>
+    <p>@category.DisplayOrder</p>
+}
+<a asp-controller="Category" asp-action="Create">Add new category</a>
