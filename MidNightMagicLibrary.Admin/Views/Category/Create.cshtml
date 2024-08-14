@@ -1,0 +1,11 @@
+﻿@using MidNightMagicLibrary.Models
+
+@model Category
+
+<form asp-controller="Category" asp-action="Create" method="post">
+    <label asp-for="@Model.Name">Name</label>
+    <input asp-for="@Model.Name" required/>
+    <label asp-for="@Model.DisplayOrder"></label>
+    <input asp-for="@Model.DisplayOrder" required/>
+    <button type="submit">Add</button>
+</form>

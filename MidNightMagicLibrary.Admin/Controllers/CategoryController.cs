@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 using MidNightMagicLibrary.BusinessLogic.Services.Interfaces;
 using MidNightMagicLibrary.Models;
 
@@ -14,13 +15,42 @@ namespace MidNightMagicLibrary.Admin.Controllers
         public IActionResult Index()
         {
             IEnumerable<Category> allCategories = _categoryService.GetAll();
-            allCategories.OrderBy(u => u.DisplayOrder);
+            IEnumerable<Category> allCategoriesSorted = allCategories.OrderBy(u => u.DisplayOrder);
 
-            return View(allCategories);
+            return View(allCategoriesSorted);
         }
         public IActionResult Create()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Category category) 
+        {
+            _categoryService.Add(category);
+
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult Edit(int categoryId)
+        {
+            Category category = _categoryService.Get(u => u.Id == categoryId);
+            return View(category);
+        }
+        [HttpPost]
+        public IActionResult Edit(Category category)
+        {
+            _categoryService.Update(category);
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult Delete(int categoryId)
+        {
+            Category category = _categoryService.Get(u=>u.Id == categoryId);
+            return View(category);
+        }
+        [HttpPost]
+        public IActionResult Delete(Category category)
+        {
+            _categoryService.Remove(category);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

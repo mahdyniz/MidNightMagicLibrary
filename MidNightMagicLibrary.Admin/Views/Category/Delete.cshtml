@@ -1,0 +1,12 @@
+﻿@using MidNightMagicLibrary.Models
+
+@model Category
+
+<form method="post" asp-controller="Category" asp-action="Delete">
+    <input asp-for="@Model.Id" hidden/>
+    <label asp-for="@Model.Name"></label>
+    <input asp-for="@Model.Name" disabled/>
+    <label asp-for="@Model.DisplayOrder"></label>
+    <input asp-for="@Model.DisplayOrder" disabled/>
+    <button type="submit">Delete</button>
+</form>

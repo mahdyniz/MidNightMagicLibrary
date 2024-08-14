@@ -74,6 +74,10 @@ namespace MidNightMagicLibrary.BusinessLogic.Services
             {
                 throw new ArgumentNullException("Category is null");
             }
+            if (category.Id == 0)
+            {
+                throw new ArgumentNullException("Category Id is 0");
+            }
             _unitOfWork.Category.Update(category);
             _unitOfWork.Save();
         }

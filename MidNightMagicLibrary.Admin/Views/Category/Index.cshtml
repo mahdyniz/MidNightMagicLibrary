@@ -20,6 +20,8 @@
                 <tr>
                     <td>@category.Name</td>
                     <td>@category.DisplayOrder</td>
+                    <td><a asp-controller="Category" asp-action="Edit" asp-route-categoryId="@category.Id" class="btn btn-primary">Edit</a></td>
+                    <td><a asp-controller="Category" asp-action="Delete" asp-route-categoryId="@category.Id" class="btn btn-primary">Delete</a></td>
                 </tr>
             }
         </tbody>
