@@ -26,9 +26,13 @@ namespace MidNightMagicLibrary.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Category category) 
         {
-            _categoryService.Add(category);
+            if (ModelState.IsValid)
+            {
+                _categoryService.Add(category);
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
 
-            return RedirectToAction(nameof(Index));
         }
         public IActionResult Edit(int categoryId)
         {
@@ -38,8 +42,12 @@ namespace MidNightMagicLibrary.Admin.Controllers
         [HttpPost]
         public IActionResult Edit(Category category)
         {
-            _categoryService.Update(category);
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                _categoryService.Update(category);
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
         }
         public IActionResult Delete(int categoryId)
         {

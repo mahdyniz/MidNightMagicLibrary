@@ -24,15 +24,30 @@ namespace MidNightMagicLibrary.DAL.Repositories
             _dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter)
+        public T Get(Expression<Func<T, bool>> filter, string? includProperties = null)
         {
             IQueryable<T> query = _dbSet;
+            if (!string.IsNullOrEmpty(includProperties))
+            {
+                foreach (var includeProp in includProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
             return query.Where(filter).FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = _dbSet;
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProrp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProrp);
+                }
+            }
+            
             return query.ToList();
         }
 

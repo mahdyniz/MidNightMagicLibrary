@@ -1,0 +1,23 @@
+﻿@using MidNightMagicLibrary.Models.ViewModels
+
+@model ProductVM
+
+<div>
+    <form method="post" asp-controller="Product" asp-action="Delete">
+        <input asp-for="@Model.Product.Id" hidden />
+        <label asp-for="@Model.Product.Title">Title</label>
+        <input asp-for="@Model.Product.Title" required disabled/>
+        <label asp-for="@Model.Product.Author">Author</label>
+        <input asp-for="@Model.Product.Author" required disabled/>
+        <label asp-for="@Model.Product.Description">Description</label>
+        <input asp-for="@Model.Product.Description" required disabled/>
+        <select asp-for="@Model.Product.CategoryId" asp-items="@Model.CategoryList" disabled>
+            <option disabled>--Select Category--</option>
+        </select>
+        <label asp-for="@Model.Product.Price">Price</label>
+        <input asp-for="@Model.Product.Price" required disabled/>
+
+        <button type="submit" class="btn btn-primary">Delete</button>
+    </form>
+
+</div>

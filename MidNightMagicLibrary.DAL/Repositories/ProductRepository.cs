@@ -1,5 +1,6 @@
 ﻿using MidNightMagicLibrary.DAL.Data;
 using MidNightMagicLibrary.DAL.Repositories.Interfaces;
+using MidNightMagicLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,23 +9,17 @@ using System.Threading.Tasks;
 
 namespace MidNightMagicLibrary.DAL.Repositories
 {
-    public class UnitOfWork : IUnitOfWork
+    public class ProductRepository : Repository<Product>, IProductRepository
     {
         private readonly ApplicationDbContext _db;
-        public ICategoryRepository Category { get; }
-
-        public IProductRepository Product {  get; }
-
-        public UnitOfWork(ApplicationDbContext db)
+        public ProductRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
-            Category = new CategoryRepository(_db);
-            Product = new ProductRepository(_db);
-
         }
-        public void Save()
+
+        public void Update(Product product)
         {
-            _db.SaveChanges();
+            _db.Products.Update(product);
         }
     }
 }

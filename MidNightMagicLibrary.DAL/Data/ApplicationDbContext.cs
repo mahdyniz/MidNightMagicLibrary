@@ -15,9 +15,11 @@ namespace MidNightMagicLibrary.DAL.Data
             
         }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Category>().HasData(
                 new Category{ Id = 1, Name = "TestName2", DisplayOrder = 1},
                 new Category { Id = 2, Name = "TestName2" , DisplayOrder = 2}

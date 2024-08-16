@@ -1,4 +1,5 @@
-﻿using MidNightLibrary.Exceptions;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using MidNightLibrary.Exceptions;
 using MidNightMagicLibrary.BusinessLogic.Services.Interfaces;
 using MidNightMagicLibrary.DAL.Repositories.Interfaces;
 using MidNightMagicLibrary.Models;
@@ -80,6 +81,14 @@ namespace MidNightMagicLibrary.BusinessLogic.Services
             }
             _unitOfWork.Category.Update(category);
             _unitOfWork.Save();
+        }
+        public IEnumerable<SelectListItem> GetCategorySelectList()
+        {
+            return _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString()
+            });
         }
     }
 }

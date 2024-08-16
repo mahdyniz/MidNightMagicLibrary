@@ -1,4 +1,5 @@
-﻿using MidNightMagicLibrary.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using MidNightMagicLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace MidNightMagicLibrary.BusinessLogic.Services.Interfaces
         void Update(Category category);
         void Remove(Category category);
         void RemoveRange(IEnumerable<Category> categories);
+        public IEnumerable<SelectListItem> GetCategorySelectList();
+
     }
 }
