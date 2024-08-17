@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Identity.Client;
 using MidNightMagicLibrary.BusinessLogic.Services;
 using MidNightMagicLibrary.BusinessLogic.Services.Interfaces;
 using MidNightMagicLibrary.DAL.Data;
@@ -33,6 +35,11 @@ namespace MidNightMagicLibrary.Admin
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider("C:\\Users\\Mahdi\\source\\repos\\MidNightMagicLibrary\\SharedFiles\\images\\product"),
+                RequestPath = "/images"
+            });
 
             app.UseRouting();
 

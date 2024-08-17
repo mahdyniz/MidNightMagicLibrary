@@ -11,9 +11,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MidNightMagicLibrary.Busine
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MidNightMagicLibrary.Admin", "MidNightMagicLibrary.Admin\MidNightMagicLibrary.Admin.csproj", "{911F8FDC-4736-4428-9FF2-5AB6ED1D50F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidNightLibrary.Utility", "MidNightLibrary.Utility\MidNightLibrary.Utility.csproj", "{9742FA25-D61B-4DF6-8A6B-F9876FF66A04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MidNightLibrary.Utility", "MidNightLibrary.Utility\MidNightLibrary.Utility.csproj", "{9742FA25-D61B-4DF6-8A6B-F9876FF66A04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidNightLibrary.Exceptions", "MidNightLibrary.Exceptions\MidNightLibrary.Exceptions.csproj", "{78DFBEAB-FB35-4534-8D55-69CC2F8652EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MidNightLibrary.Exceptions", "MidNightLibrary.Exceptions\MidNightLibrary.Exceptions.csproj", "{78DFBEAB-FB35-4534-8D55-69CC2F8652EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles", "{D84B85B5-D462-4F2C-9969-E94B9B42F3FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{E80A2CA0-CF72-4BAB-B186-E2CFFA04B5C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "product", "product", "{79E1F7FB-8B3D-4EAB-B7FE-43DC48518B6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelperConsole", "HelperConsole\HelperConsole.csproj", "{F52711EE-D745-458A-A8E9-AD0738AC7354}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,9 +53,17 @@ Global
 		{78DFBEAB-FB35-4534-8D55-69CC2F8652EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78DFBEAB-FB35-4534-8D55-69CC2F8652EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78DFBEAB-FB35-4534-8D55-69CC2F8652EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F52711EE-D745-458A-A8E9-AD0738AC7354}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F52711EE-D745-458A-A8E9-AD0738AC7354}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F52711EE-D745-458A-A8E9-AD0738AC7354}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F52711EE-D745-458A-A8E9-AD0738AC7354}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E80A2CA0-CF72-4BAB-B186-E2CFFA04B5C1} = {D84B85B5-D462-4F2C-9969-E94B9B42F3FF}
+		{79E1F7FB-8B3D-4EAB-B7FE-43DC48518B6B} = {E80A2CA0-CF72-4BAB-B186-E2CFFA04B5C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {05C98EBA-712C-4A7A-A0FB-3B8D5E7C03D4}

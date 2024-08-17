@@ -10,10 +10,12 @@ namespace MidNightMagicLibrary.Admin.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
-        public ProductController(IProductService productService, ICategoryService categoryService)
+        private readonly IConfiguration _configuration;
+        public ProductController(IProductService productService, ICategoryService categoryService, IConfiguration configuration)
         {
             _productService = productService;
             _categoryService = categoryService;
+            _configuration = configuration;
         }
         public IActionResult Index()
         {
@@ -31,10 +33,24 @@ namespace MidNightMagicLibrary.Admin.Controllers
             return View(productVM);
         }
         [HttpPost]
-        public IActionResult Create(ProductVM productVM)
+        public IActionResult Create(ProductVM productVM, IFormFile? file)
         {
-                _productService.Add(productVM.Product);
-                return RedirectToAction(nameof(Index));
+
+            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var productImagePath = _configuration["SharedFiles:ProductImagesPath"];
+
+            if (!Directory.Exists(productImagePath))
+            {
+                Directory.CreateDirectory(productImagePath);
+            }
+
+            using (var fileStream = new FileStream(Path.Combine(productImagePath, fileName), FileMode.Create))
+            {
+                file.CopyTo(fileStream);
+            }
+            productVM.Product.ImageUrl = @"\SharedFiles\images\product\" + fileName;
+            _productService.Add(productVM.Product);
+            return RedirectToAction(nameof(Index));
         }
         public IActionResult Edit(int productId)
         {

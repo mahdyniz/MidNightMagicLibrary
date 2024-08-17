@@ -3,7 +3,7 @@
 @model ProductVM
 
 <div>
-    <form method="post" asp-controller="Product" asp-action="Create">
+    <form method="post" asp-controller="Product" asp-action="Create" enctype="multipart/form-data">
         <input asp-for="@Model.Product.Id" hidden/>
         <label asp-for="@Model.Product.Title">Title</label>
         <input asp-for="@Model.Product.Title" required />
@@ -16,6 +16,7 @@
         </select>
         <label asp-for="@Model.Product.Price">Price</label>
         <input asp-for="@Model.Product.Price" required />
+        <input type="file" name="file"/>
         
         <button type="submit" class="btn btn-primary">Add</button>
     </form>
