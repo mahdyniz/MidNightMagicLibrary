@@ -1,18 +1,31 @@
 ﻿@using MidNightMagicLibrary.Models
 @model IEnumerable<Product>
 
-<div>
-    @foreach (Product product in Model)
-    {
-        <p>@product.Title</p>
-        <p>@product.Description</p>
-        <p>@product.Author</p>
-        <p>@product.Price.ToString("c")</p>
-        <p>@product.Category.Name</p>
-        <img src="@product.ImageUrl" alt="@product.Title" />
-        <a asp-controller="Product" asp-action="Edit" asp-route-productId="@product.Id">Edit</a>
-        <a asp-controller="Product" asp-action="Delete" asp-route-productId="@product.Id">Delete</a>
-    }
-    <a asp-controller="Product" asp-action="Create">Add a Product</a>
-    
+<div class="container mt-4">
+    <div class="row">
+        @foreach (Product product in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="@product.ImageUrl" class="card-img-top img-fluid" alt="@product.Title" style="height: 200px; object-fit: cover;">
+                    <div class="card-body p-3">
+                        <h6 class="card-title text-truncate">@product.Title</h6>
+                        <p class="font-weight-bold mb-1">Author:</p>
+                        <p class="text-muted small mb-2">@product.Author</p>
+                        <p class="font-weight-bold mb-1">Category:</p>
+                        <p class="text-muted small mb-2">@product.Category.Name</p>
+                        <p class="font-weight-bold mb-1">Price:</p>
+                        <p class="font-weight-bold mb-0">@product.Price.ToString("c")</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 d-flex justify-content-between p-2">
+                        <a asp-controller="Product" asp-action="Edit" asp-route-productId="@product.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                        <a asp-controller="Product" asp-action="Delete" asp-route-productId="@product.Id" class="btn btn-outline-danger btn-sm">Delete</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="text-center mt-4">
+        <a asp-controller="Product" asp-action="Create" class="btn btn-success">Add a Product</a>
+    </div>
 </div>

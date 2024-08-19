@@ -1,23 +1,54 @@
 ﻿@using MidNightMagicLibrary.Models.ViewModels
-
 @model ProductVM
 
-<div>
-    <form method="post" asp-controller="Product" asp-action="Create" enctype="multipart/form-data">
-        <input asp-for="@Model.Product.Id" hidden/>
-        <label asp-for="@Model.Product.Title">Title</label>
-        <input asp-for="@Model.Product.Title" required />
-        <label asp-for="@Model.Product.Author">Author</label>
-        <input asp-for="@Model.Product.Author" required />
-        <label asp-for="@Model.Product.Description">Description</label>
-        <input asp-for="@Model.Product.Description" required />
-        <select asp-for="@Model.Product.CategoryId" asp-items="@Model.CategoryList">
-            <option>--Select Category--</option>
-        </select>
-        <label asp-for="@Model.Product.Price">Price</label>
-        <input asp-for="@Model.Product.Price" required />
-        <input type="file" name="file"/>
-        
-        <button type="submit" class="btn btn-primary">Add</button>
-    </form>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header text-center">
+                    <h4>Add New Product</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-controller="Product" asp-action="Create" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label asp-for="@Model.Product.Title">Title</label>
+                            <input asp-for="@Model.Product.Title" class="form-control" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="@Model.Product.Author">Author</label>
+                            <input asp-for="@Model.Product.Author" class="form-control" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="@Model.Product.Description">Description</label>
+                            <textarea asp-for="@Model.Product.Description" class="form-control" rows="3" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="@Model.Product.CategoryId">Category</label>
+                            <select asp-for="@Model.Product.CategoryId" asp-items="@Model.CategoryList" class="form-control">
+                                <option value="" disabled selected>-- Select Category --</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="@Model.Product.Price">Price</label>
+                            <input asp-for="@Model.Product.Price" class="form-control" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="file">Upload Image</label>
+                            <input type="file" name="file" class="form-control-file" />
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success mt-3">Add</button>
+                            <a asp-controller="Product" asp-action="Index" class="btn btn-secondary mt-3 ml-2">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
