@@ -3,7 +3,7 @@
 @model ProductVM
 
 <div>
-    <form method="post" asp-controller="Product" asp-action="Edit">
+    <form method="post" asp-controller="Product" asp-action="Edit" enctype="multipart/form-data">
         <input asp-for="@Model.Product.Id" hidden/>
         <label asp-for="@Model.Product.Title">Title</label>
         <input asp-for="@Model.Product.Title" required />
@@ -11,7 +11,7 @@
         <input asp-for="@Model.Product.Author" required />
         <label asp-for="@Model.Product.Description">Description</label>
         <input asp-for="@Model.Product.Description" required />
-        <input asp-for="@Model.Product.ImageUrl"/>
+        <input asp-for="@Model.Product.ImageUrl" disabled hidden/>
         <select asp-for="@Model.Product.CategoryId" asp-items="@Model.CategoryList">
             <option>--Select Category--</option>
         </select>

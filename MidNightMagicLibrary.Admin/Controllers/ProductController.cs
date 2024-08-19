@@ -37,16 +37,16 @@ namespace MidNightMagicLibrary.Admin.Controllers
         [HttpPost]
         public IActionResult Create(ProductVM productVM, IFormFile? file)
         {
-            string productImagePath = _configuration.GetValue("SharedFiles:ProductImagesPath","PathNull");
+            string productImagesPath = _configuration.GetValue("SharedFiles:ProductImagesPath","PathNull");
             string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
 
-            if (!Directory.Exists(productImagePath))
+            if (!Directory.Exists(productImagesPath))
             {
                 Console.WriteLine("Directory doesn't exsit, Creating the directory...");
-                Directory.CreateDirectory(productImagePath);
+                Directory.CreateDirectory(productImagesPath);
             }
 
-            using (var fileStream = new FileStream(Path.Combine(productImagePath, fileName), FileMode.Create))
+            using (var fileStream = new FileStream(Path.Combine(productImagesPath, fileName), FileMode.Create))
             {
                 file.CopyTo(fileStream);
             }
@@ -74,8 +74,56 @@ namespace MidNightMagicLibrary.Admin.Controllers
         [HttpPost]
         public IActionResult Edit(ProductVM productVM, IFormFile? file)
         {
+            if (file != null)
+            {
+                if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
+                {
+                    string productImagesPath = _configuration.GetValue("SharedFiles:ProductImagesPath", "PathNull");
+
+                    if (!Directory.Exists(productImagesPath))
+                    {
+                        throw new Exception("The directory does not exist/wrong path");
+                    }
+                    string oldProductImageUrl = productVM.Product.ImageUrl;
+                    oldProductImageUrl = oldProductImageUrl.Replace(@"/images/product/", "");
+
+                    string oldProductImagePath = Path.Combine(productImagesPath, oldProductImageUrl);
+
+                    System.IO.File.Delete(oldProductImagePath);
+
+                    string fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                    using (var fileStream = new FileStream(Path.Combine(productImagesPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    string imageUrl = @"/images/product/" + fileName;
+
+                    productVM.Product.ImageUrl = imageUrl;
+                }
+                else
+                {
+                    string productImagesPath = _configuration.GetValue("SharedFiles:ProductImagesPath", "PathNull");
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+
+                    if (!Directory.Exists(productImagesPath))
+                    {
+                        Console.WriteLine("Directory doesn't exsit, Creating the directory...");
+                        Directory.CreateDirectory(productImagesPath);
+                    }
+
+                    using (var fileStream = new FileStream(Path.Combine(productImagesPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    string imageUrl = @"/images/product/" + fileName;
+
+                    productVM.Product.ImageUrl = imageUrl;
+                }
+                
+            }
             _productService.Update(productVM.Product);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index)); 
         }
         public IActionResult Delete(int productId) 
         {
@@ -91,6 +139,20 @@ namespace MidNightMagicLibrary.Admin.Controllers
         [HttpPost]
         public IActionResult Delete(ProductVM productVM)
         {
+            if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
+            {
+                string productImagesPath = _configuration.GetValue("SharedFiles:ProductImagesPath", "PathNull");
+
+                if (!Directory.Exists(productImagesPath))
+                {
+                    throw new Exception("The directory does not exist/wrong path");
+                }
+                string oldProductImageUrl = productVM.Product.ImageUrl;
+                oldProductImageUrl = oldProductImageUrl.Replace(@"/images/product/", "");
+
+                string oldProductImagePath = Path.Combine(productImagesPath, oldProductImageUrl);
+                System.IO.File.Delete(oldProductImagePath);
+            }
             _productService.Remove(productVM.Product);
             return RedirectToAction(nameof(Index));
         }
