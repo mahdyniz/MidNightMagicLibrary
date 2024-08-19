@@ -9,11 +9,10 @@
         <p>@product.Author</p>
         <p>@product.Price.ToString("c")</p>
         <p>@product.Category.Name</p>
+        <img src="@product.ImageUrl" alt="@product.Title" />
         <a asp-controller="Product" asp-action="Edit" asp-route-productId="@product.Id">Edit</a>
         <a asp-controller="Product" asp-action="Delete" asp-route-productId="@product.Id">Delete</a>
     }
     <a asp-controller="Product" asp-action="Create">Add a Product</a>
-
-
-
+    
 </div>

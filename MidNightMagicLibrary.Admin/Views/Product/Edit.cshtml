@@ -11,12 +11,13 @@
         <input asp-for="@Model.Product.Author" required />
         <label asp-for="@Model.Product.Description">Description</label>
         <input asp-for="@Model.Product.Description" required />
+        <input asp-for="@Model.Product.ImageUrl"/>
         <select asp-for="@Model.Product.CategoryId" asp-items="@Model.CategoryList">
             <option>--Select Category--</option>
         </select>
         <label asp-for="@Model.Product.Price">Price</label>
         <input asp-for="@Model.Product.Price" required />
-        
+        <input type="file" name="file" />
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
 

@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MidNightLibrary.Utility\MidNightLibrary.Utility.csproj" />
     <ProjectReference Include="..\MidNightMagicLibrary.BusinessLogic\MidNightMagicLibrary.BusinessLogic.csproj" />
     <ProjectReference Include="..\MidNightMagicLibrary.DAL\MidNightMagicLibrary.DAL.csproj" />
     <ProjectReference Include="..\MidNightMagicLibrary.Models\MidNightMagicLibrary.Models.csproj" />

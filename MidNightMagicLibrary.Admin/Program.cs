@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Identity.Client;
+using MidNightLibrary.Utility;
 using MidNightMagicLibrary.BusinessLogic.Services;
 using MidNightMagicLibrary.BusinessLogic.Services.Interfaces;
 using MidNightMagicLibrary.DAL.Data;
@@ -22,7 +23,6 @@ namespace MidNightMagicLibrary.Admin
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IProductService, ProductService>();
 
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -35,13 +35,25 @@ namespace MidNightMagicLibrary.Admin
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider("C:\\Users\\Mahdi\\source\\repos\\MidNightMagicLibrary\\SharedFiles\\images\\product"),
-                RequestPath = "/images"
-            });
+
+
+            var productImagesPathSetting = builder.Configuration
+                .GetSection("SharedFiles")
+                .Get<SharedFiles>();
 
             app.UseRouting();
+            if (productImagesPathSetting?.ProductImagesPath != null)
+            {
+                app.UseStaticFiles(new StaticFileOptions
+                {
+                    FileProvider = new PhysicalFileProvider(productImagesPathSetting.ProductImagesPath),
+                    RequestPath = "/images/product"
+                });
+            }
+            else
+            {
+                Console.WriteLine("ProductImagesPath is null. Please check the configuration.");
+            }
 
             app.UseAuthorization();
 
