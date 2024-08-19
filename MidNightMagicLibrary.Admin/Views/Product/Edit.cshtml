@@ -11,7 +11,7 @@
         <input asp-for="@Model.Product.Author" required />
         <label asp-for="@Model.Product.Description">Description</label>
         <input asp-for="@Model.Product.Description" required />
-        <input asp-for="@Model.Product.ImageUrl" disabled hidden/>
+        <input asp-for="@Model.Product.ImageUrl" readonly hidden/>
         <select asp-for="@Model.Product.CategoryId" asp-items="@Model.CategoryList">
             <option>--Select Category--</option>
         </select>
