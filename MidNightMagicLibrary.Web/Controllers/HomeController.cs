@@ -1,23 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
-using MidNightMagicLibrary.Admin.Models;
 using MidNightMagicLibrary.BusinessLogic.Services.Interfaces;
+using MidNightMagicLibrary.Web.Models;
 using System.Diagnostics;
 
-namespace MidNightMagicLibrary.Admin.Controllers
+namespace MidNightMagicLibrary.Web.Controllers
 {
-
     public class HomeController : Controller
     {
+        private readonly IProductService _productService;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IProductService productService)
         {
+            _productService = productService;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var allProducts = _productService.GetAll();
+            return View(allProducts);
+        }
+        public IActionResult ProductDetail(int productId)
+        {
+            var product = _productService.Get(u => u.Id == productId);
+            return View(product);
         }
 
         public IActionResult Privacy()
