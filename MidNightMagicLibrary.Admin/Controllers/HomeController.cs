@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using MidNightMagicLibrary.Admin.Models;
-using MidNightMagicLibrary.BusinessLogic.Services.Interfaces;
 using System.Diagnostics;
 
 namespace MidNightMagicLibrary.Admin.Controllers
 {
-
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
