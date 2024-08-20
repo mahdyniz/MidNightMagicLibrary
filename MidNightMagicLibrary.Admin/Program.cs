@@ -7,6 +7,7 @@ using MidNightMagicLibrary.BusinessLogic.Services.Interfaces;
 using MidNightMagicLibrary.DAL.Data;
 using MidNightMagicLibrary.DAL.Repositories;
 using MidNightMagicLibrary.DAL.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace MidNightMagicLibrary.Admin
 {
@@ -19,6 +20,8 @@ namespace MidNightMagicLibrary.Admin
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IProductService, ProductService>();
@@ -54,7 +57,7 @@ namespace MidNightMagicLibrary.Admin
             {
                 Console.WriteLine("ProductImagesPath is null. Please check the configuration.");
             }
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

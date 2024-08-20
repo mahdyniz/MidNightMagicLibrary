@@ -31,5 +31,7 @@ namespace MidNightMagicLibrary.Models
         public Category Category { get; set; }
 
         public string? ImageUrl { get; set; }
+        [NotMapped]
+        public int Count { get; set; }
     }
 }
