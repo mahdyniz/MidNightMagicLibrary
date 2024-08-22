@@ -15,7 +15,6 @@ namespace MidNightMagicLibrary.Web.Controllers
             _productService = productService;
             _logger = logger;
         }
-
         public IActionResult Index()
         {
             var allProducts = _productService.GetAll();
