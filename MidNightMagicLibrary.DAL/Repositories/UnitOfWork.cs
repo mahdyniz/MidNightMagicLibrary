@@ -12,15 +12,17 @@ namespace MidNightMagicLibrary.DAL.Repositories
     {
         private readonly ApplicationDbContext _db;
         public ICategoryRepository Category { get; }
-
         public IProductRepository Product {  get; }
+        public IShoppingCartRepository ShoppingCart { get; }
+        public IApplicationUserRepository ApplicationUser { get; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Category = new CategoryRepository(_db);
             Product = new ProductRepository(_db);
-
+            ShoppingCart = new ShoppingCartRepository(_db);
+            ApplicationUser = new ApplicationUserRepository(_db);
         }
         public void Save()
         {
