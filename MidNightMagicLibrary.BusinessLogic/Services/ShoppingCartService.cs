@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MidNightMagicLibrary.BusinessLogic.Services
 {
-    internal class ShoppingCartService : IShoppingCartService
+    public class ShoppingCartService : IShoppingCartService
     {
         private readonly IUnitOfWork _unitOfWork;
         public ShoppingCartService(IUnitOfWork unitOfWork)

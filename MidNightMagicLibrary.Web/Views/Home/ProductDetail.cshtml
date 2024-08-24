@@ -1,14 +1,18 @@
 ﻿@using MidNightMagicLibrary.Models
 @model Product
 
-<p>@Model.Title</p>
-<p>@Model.Author</p>
-<p>@Model.Description</p>
-<p>@Model.Category.Name</p>
-<p>@Model.Price</p>
-<p>@Model.Title</p>
-<input asp-for="@Model.Count" />
-<img src="@Model.ImageUrl" />
-<a asp-controller="ShoppingCart" asp-action="Add">
-    Add to shopping cart
-</a>
+<form method="post" asp-controller="ShoppingCart" asp-action="Create">
+    <p>@Model.Title</p>
+    <p>@Model.Author</p>
+    <p>@Model.Description</p>
+    <p>@Model.Category.Name</p>
+    <p>@Model.Price</p>
+    <p>@Model.Title</p>
+    <input asp-for="@Model.Id" hidden/>
+    <input asp-for="@Model.Count" />
+    <input asp-for="@Model.Price" hidden/>
+
+    <img src="@Model.ImageUrl" />
+    <button type="submit" class="btn btn-primary">Add to shopping cart</button>
+</form>
+

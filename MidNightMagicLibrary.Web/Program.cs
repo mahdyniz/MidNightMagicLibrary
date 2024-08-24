@@ -9,6 +9,7 @@ using MidNightMagicLibrary.DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using MidNightMagicLibrary.Models;
 
 namespace MidNightMagicLibrary.Admin
 {
@@ -27,6 +28,7 @@ namespace MidNightMagicLibrary.Admin
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IEmailSender, EmailSender>();
+            builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
