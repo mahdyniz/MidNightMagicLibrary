@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using MidNightMagicLibrary.BusinessLogic.Services.Interfaces;
 using MidNightMagicLibrary.Models;
 using System.Security.Claims;
@@ -26,17 +27,33 @@ namespace MidNightMagicLibrary.Web.Controllers
         [HttpPost]
         public IActionResult Create(Product product)
         {
-            ShoppingCart shoppingCart = new ShoppingCart();
-            shoppingCart.ProductId = product.Id;
-            shoppingCart.Count = product.Count;
+            var allShoppingCarts = _shoppingCartService.GetAll();
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var usersShoppingCarts = allShoppingCarts.Where(u => u.ApplicationUserId == userId);
 
-            shoppingCart.ApplicationUserId = userId;
-            shoppingCart.TotalPrice = (double)product.Price * shoppingCart.Count;
+            bool flag = false;
+            foreach (var cart in usersShoppingCarts)
+            {
+                if (cart.ProductId == product.Id)
+                {
+                    flag = true;
+                    cart.Count += product.Count;
+                    cart.TotalPrice = (double)product.Price * cart.Count;
+                    _shoppingCartService.Update(cart);
+                }
+            }
+            if (flag == false)
+            {
+                ShoppingCart shoppingCart = new ShoppingCart();
+                shoppingCart.ProductId = product.Id;
+                shoppingCart.Count = product.Count;
 
-            _shoppingCartService.Add(shoppingCart);
-            
+                shoppingCart.ApplicationUserId = userId;
+                shoppingCart.TotalPrice = (double)product.Price * shoppingCart.Count;
+                _shoppingCartService.Add(shoppingCart);
+            }
+
             return RedirectToAction("Index", "Home");
         }
     }
