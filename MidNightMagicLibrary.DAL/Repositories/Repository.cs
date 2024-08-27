@@ -47,7 +47,6 @@ namespace MidNightMagicLibrary.DAL.Repositories
                     query = query.Include(includeProrp);
                 }
             }
-            
             return query.ToList();
         }
 

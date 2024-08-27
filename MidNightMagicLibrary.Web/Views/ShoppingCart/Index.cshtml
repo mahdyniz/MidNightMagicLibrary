@@ -1,0 +1,10 @@
+﻿@using MidNightMagicLibrary.Models
+@model IEnumerable<ShoppingCart>
+
+@foreach(var cart in Model)
+{
+    <p>Title : @cart.Product.Title</p>
+    <p>Product Price : @cart.Product.Price</p>
+    <p>Quantity : @cart.Count</p>
+    <p>Total Price : @cart.TotalPrice</p>
+}

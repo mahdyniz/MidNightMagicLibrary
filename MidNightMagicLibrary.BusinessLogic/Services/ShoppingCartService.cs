@@ -30,7 +30,7 @@ namespace MidNightMagicLibrary.BusinessLogic.Services
 
         public ShoppingCart Get(Expression<Func<ShoppingCart, bool>> filter)
         {
-            var shoppingCart = _unitOfWork.ShoppingCart.Get(filter, includProperties: "Product, ApplicationUser");
+            var shoppingCart = _unitOfWork.ShoppingCart.Get(filter, includProperties: "Product,ApplicationUser");
             if (shoppingCart == null)
             {
                 throw new NotFoundException("Shopping cart not found");
@@ -40,7 +40,7 @@ namespace MidNightMagicLibrary.BusinessLogic.Services
 
         public IEnumerable<ShoppingCart> GetAll()
         {
-            IEnumerable<ShoppingCart> allShoppingCarts = _unitOfWork.ShoppingCart.GetAll(includProperties: "Product, ApplicationUser");
+            IEnumerable<ShoppingCart> allShoppingCarts = _unitOfWork.ShoppingCart.GetAll(includProperties: "Product,ApplicationUser");
             if (allShoppingCarts == null)
             {
                 throw new InvalidOperationException("Shopping cart data is not available");

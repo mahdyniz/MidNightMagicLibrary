@@ -16,8 +16,14 @@ namespace MidNightMagicLibrary.Web.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var allShoppingCarts = _shoppingCartService.GetAll();
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var usersShoppingCarts = allShoppingCarts.Where(u => u.ApplicationUserId == userId);
+
+            return View(usersShoppingCarts);
         }
+        [HttpPost]
         public IActionResult Create(Product product)
         {
             ShoppingCart shoppingCart = new ShoppingCart();
