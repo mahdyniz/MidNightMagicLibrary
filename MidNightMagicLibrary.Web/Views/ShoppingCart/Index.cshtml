@@ -1,10 +1,31 @@
 ﻿@using MidNightMagicLibrary.Models
 @model IEnumerable<ShoppingCart>
 
-@foreach(var cart in Model)
-{
-    <p>Title : @cart.Product.Title</p>
-    <p>Product Price : @cart.Product.Price</p>
-    <p>Quantity : @cart.Count</p>
-    <p>Total Price : @cart.TotalPrice</p>
-}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Your Shopping Cart</h2>
+    <div class="list-group">
+        @foreach (var cart in Model)
+        {
+            <div class="list-group-item d-flex align-items-center justify-content-between mb-3 p-3 shadow-sm">
+                <div class="d-flex align-items-center">
+                    <img src="@cart.Product.ImageUrl" alt="@cart.Product.Title" class="img-fluid rounded me-3" style="height: 100px; width: 80px; object-fit: cover;">
+                    <div>
+                        <h5 class="mb-1">@cart.Product.Title</h5>
+                        <p class="mb-1 text-muted"><strong>Price:</strong> @cart.Product.Price.ToString("c")</p>
+                        <p class="mb-1 text-muted"><strong>Quantity:</strong> @cart.Count</p>
+                        <p class="mb-1 text-primary"><strong>Total:</strong> @cart.TotalPrice.ToString("c")</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <a asp-controller="ShoppingCart" asp-action="DecreaseQuantity" asp-route-cartId="@cart.Id" class="btn btn-outline-danger btn-sm" title="Decrease Quantity">
+                        <span>&#8722;</span> <!-- Minus symbol -->
+                    </a>
+                    <span class="mx-2">@cart.Count</span>
+                    <a asp-controller="ShoppingCart" asp-action="IncreaseQuantity" asp-route-cartId="@cart.Id" class="btn btn-outline-success btn-sm" title="Increase Quantity">
+                        <span>&#43;</span> <!-- Plus symbol -->
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

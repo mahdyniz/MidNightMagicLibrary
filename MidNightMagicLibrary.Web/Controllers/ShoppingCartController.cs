@@ -56,5 +56,41 @@ namespace MidNightMagicLibrary.Web.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        public IActionResult DecreaseQuantity(int cartId)
+        {
+            //find the user's shopping carts
+            var allShoppingCarts = _shoppingCartService.GetAll();
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var usersShoppingCarts = allShoppingCarts.Where(u => u.ApplicationUserId == userId);
+            // find the specific cart related to this product
+            var cart = usersShoppingCarts.Where(u => u.Id == cartId).FirstOrDefault();
+            // decrease the count of the product in the cart
+            if (cart.Count != 1)
+            {
+                cart.Count--;
+                cart.TotalPrice = cart.Count * (double)cart.Product.Price;
+                _shoppingCartService.Update(cart);
+            }
+            else
+            {
+                _shoppingCartService.Remove(cart);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult IncreaseQuantity(int cartId)
+        {
+            var allShoppingCarts = _shoppingCartService.GetAll();
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var usersShoppingCarts = allShoppingCarts.Where(u => u.ApplicationUserId == userId);
+            var cart = usersShoppingCarts.Where(u => u.Id == cartId).FirstOrDefault();
+
+            cart.Count++;
+            cart.TotalPrice = cart.Count * (double)cart.Product.Price;
+
+            _shoppingCartService.Update(cart);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
