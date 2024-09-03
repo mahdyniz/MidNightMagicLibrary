@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using MidNightMagicLibrary.BusinessLogic.Services.Interfaces;
 using MidNightMagicLibrary.Models;
+using MidNightMagicLibrary.Models.ViewModels;
+using System.Numerics;
 using System.Security.Claims;
 
 namespace MidNightMagicLibrary.Web.Controllers
@@ -22,7 +24,16 @@ namespace MidNightMagicLibrary.Web.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var usersShoppingCarts = allShoppingCarts.Where(u => u.ApplicationUserId == userId);
 
-            return View(usersShoppingCarts);
+            ShoppingCartVM shoppingCartVM = new ShoppingCartVM();
+            shoppingCartVM.ShoppingCarts = usersShoppingCarts.ToList();
+            double totalCost = 0;
+            foreach (var cart in usersShoppingCarts)
+            {
+                totalCost += cart.TotalPrice;
+            }
+            shoppingCartVM.TotalCost = totalCost;
+
+            return View(shoppingCartVM);
         }
         [HttpPost]
         public IActionResult Create(Product product)
@@ -53,19 +64,15 @@ namespace MidNightMagicLibrary.Web.Controllers
                 shoppingCart.TotalPrice = (double)product.Price * shoppingCart.Count;
                 _shoppingCartService.Add(shoppingCart);
             }
-
             return RedirectToAction("Index", "Home");
         }
         public IActionResult DecreaseQuantity(int cartId)
         {
-            //find the user's shopping carts
             var allShoppingCarts = _shoppingCartService.GetAll();
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var usersShoppingCarts = allShoppingCarts.Where(u => u.ApplicationUserId == userId);
-            // find the specific cart related to this product
             var cart = usersShoppingCarts.Where(u => u.Id == cartId).FirstOrDefault();
-            // decrease the count of the product in the cart
             if (cart.Count != 1)
             {
                 cart.Count--;
