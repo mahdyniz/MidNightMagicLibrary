@@ -13,6 +13,8 @@ namespace MidNightMagicLibrary.DAL.Repositories.Interfaces
         IProductRepository Product { get; }
         IShoppingCartRepository ShoppingCart { get; }
         IApplicationUserRepository ApplicationUser { get; }
+        IOrderRepository Order{ get; }
+        IOrderItemRepository OrderItem{ get; }
         void Save();
     }
 }

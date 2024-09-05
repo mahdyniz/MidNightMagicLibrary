@@ -34,4 +34,18 @@
     <div class="text-end mt-4">
         <h4>Total Cost: <span class="text-success">@Model.TotalCost.ToString("c")</span></h4>
     </div>
+    <form method="post" asp-controller="OrderConfirmation" asp-action="Index">
+        <!-- Make sure to post the list and other fields -->
+        @for (var i = 0; i < Model.ShoppingCarts.Count; i++)
+        {
+            <input asp-for="ShoppingCarts[i].Id" type="hidden" />
+            <input asp-for="ShoppingCarts[i].ProductId" type="hidden" />
+            <input asp-for="ShoppingCarts[i].Count" type="hidden" />
+            <input asp-for="ShoppingCarts[i].ApplicationUserId" type="hidden" />
+            <input asp-for="ShoppingCarts[i].TotalPrice" type="hidden" />
+        }
+        <input asp-for="TotalCost" hidden />
+        <button class="btn btn-primary">Continue Shopping</button>
+    </form>
+
 </div>

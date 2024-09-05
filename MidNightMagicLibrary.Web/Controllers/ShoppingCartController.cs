@@ -99,5 +99,6 @@ namespace MidNightMagicLibrary.Web.Controllers
             _shoppingCartService.Update(cart);
             return RedirectToAction(nameof(Index));
         }
+
     }
 }

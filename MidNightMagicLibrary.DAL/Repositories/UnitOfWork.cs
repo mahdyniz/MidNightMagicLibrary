@@ -15,7 +15,8 @@ namespace MidNightMagicLibrary.DAL.Repositories
         public IProductRepository Product {  get; }
         public IShoppingCartRepository ShoppingCart { get; }
         public IApplicationUserRepository ApplicationUser { get; }
-
+        public IOrderRepository Order { get; }
+        public IOrderItemRepository OrderItem { get; set; }
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
@@ -23,6 +24,8 @@ namespace MidNightMagicLibrary.DAL.Repositories
             Product = new ProductRepository(_db);
             ShoppingCart = new ShoppingCartRepository(_db);
             ApplicationUser = new ApplicationUserRepository(_db);
+            Order = new OrderRepository(_db);
+            OrderItem = new OrderItemRepository(_db);
         }
         public void Save()
         {
