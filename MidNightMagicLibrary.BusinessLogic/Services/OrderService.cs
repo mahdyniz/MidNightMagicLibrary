@@ -31,7 +31,7 @@ namespace MidNightMagicLibrary.BusinessLogic.Services
 
         public Order Get(Expression<Func<Order, bool>> filter)
         {
-            var order = _unitOfWork.Order.Get(filter);
+            var order = _unitOfWork.Order.Get(filter, includProperties:"ApplicationUser");
             if (order == null)
             {
                 throw new NotFoundException("order not found");
@@ -41,7 +41,7 @@ namespace MidNightMagicLibrary.BusinessLogic.Services
 
         public IEnumerable<Order> GetAll()
         {
-            IEnumerable<Order> allOrders = _unitOfWork.Order.GetAll();
+            IEnumerable<Order> allOrders = _unitOfWork.Order.GetAll(includProperties:"ApplicationUser");
             if (allOrders == null)
             {
                 throw new InvalidOperationException("order data is not available");

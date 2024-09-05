@@ -31,7 +31,7 @@ namespace MidNightMagicLibrary.BusinessLogic.Services
 
         public OrderItem Get(Expression<Func<OrderItem, bool>> filter)
         {
-            var orderItem = _unitOfWork.OrderItem.Get(filter);
+            var orderItem = _unitOfWork.OrderItem.Get(filter, includProperties:"Order,Product");
             if (orderItem == null)
             {
                 throw new NotFoundException("orderItem not found");
@@ -41,7 +41,7 @@ namespace MidNightMagicLibrary.BusinessLogic.Services
 
         public IEnumerable<OrderItem> GetAll()
         {
-            IEnumerable<OrderItem> allOrderItems = _unitOfWork.OrderItem.GetAll();
+            IEnumerable<OrderItem> allOrderItems = _unitOfWork.OrderItem.GetAll(includProperties: "Order,Product");
             if (allOrderItems == null)
             {
                 throw new InvalidOperationException("OrderItems data is not available");
