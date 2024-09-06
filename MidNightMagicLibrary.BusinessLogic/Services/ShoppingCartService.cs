@@ -2,6 +2,7 @@
 using MidNightMagicLibrary.BusinessLogic.Services.Interfaces;
 using MidNightMagicLibrary.DAL.Repositories.Interfaces;
 using MidNightMagicLibrary.Models;
+using MidNightMagicLibrary.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,6 +80,14 @@ namespace MidNightMagicLibrary.BusinessLogic.Services
             }
             _unitOfWork.ShoppingCart.Update(shoppingCart);
             _unitOfWork.Save();
+        }
+        public void LoadProductFromDb(ShoppingCartVM shoppingCartVM)
+        {
+            foreach (var cart in shoppingCartVM.ShoppingCarts)
+            {
+                var productFromDb = _unitOfWork.Product.Get(p => p.Id == cart.ProductId);
+                cart.Product = productFromDb;
+            }
         }
     }
 }

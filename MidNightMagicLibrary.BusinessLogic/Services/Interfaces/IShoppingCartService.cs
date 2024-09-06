@@ -1,4 +1,5 @@
 ﻿using MidNightMagicLibrary.Models;
+using MidNightMagicLibrary.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace MidNightMagicLibrary.BusinessLogic.Services.Interfaces
         void Update(ShoppingCart shoppingCart);
         void Remove(ShoppingCart shoppingCart);
         void RemoveRange(IEnumerable<ShoppingCart> shoppingCart);
+        public void LoadProductFromDb(ShoppingCartVM shoppingCartVM);
     }
 }

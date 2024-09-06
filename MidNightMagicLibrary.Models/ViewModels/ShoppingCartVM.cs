@@ -9,6 +9,6 @@ namespace MidNightMagicLibrary.Models.ViewModels
     public class ShoppingCartVM
     {
         public List<ShoppingCart> ShoppingCarts { get; set; }
-        public double TotalCost { get; set; }
+        public Order Order { get; set; }
     }
 }

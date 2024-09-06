@@ -25,13 +25,15 @@ namespace MidNightMagicLibrary.Web.Controllers
             var usersShoppingCarts = allShoppingCarts.Where(u => u.ApplicationUserId == userId);
 
             ShoppingCartVM shoppingCartVM = new ShoppingCartVM();
+            shoppingCartVM.Order = new Order();
+
             shoppingCartVM.ShoppingCarts = usersShoppingCarts.ToList();
             double totalCost = 0;
             foreach (var cart in usersShoppingCarts)
             {
                 totalCost += cart.TotalPrice;
             }
-            shoppingCartVM.TotalCost = totalCost;
+            shoppingCartVM.Order.OrderTotal = totalCost;
 
             return View(shoppingCartVM);
         }
@@ -99,6 +101,5 @@ namespace MidNightMagicLibrary.Web.Controllers
             _shoppingCartService.Update(cart);
             return RedirectToAction(nameof(Index));
         }
-
     }
 }

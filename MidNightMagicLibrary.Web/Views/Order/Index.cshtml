@@ -1,0 +1,50 @@
+﻿@using MidNightMagicLibrary.Models.ViewModels
+@model ShoppingCartVM
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Your Shopping Cart</h2>
+
+    @if (Model.ShoppingCarts.Any())
+    {
+        <div class="list-group">
+            @foreach (var cart in Model.ShoppingCarts)
+            {
+                if (cart.Product != null)
+                {
+                    <div class="list-group-item d-flex align-items-center justify-content-between mb-3 p-3 shadow-sm">
+                        <div>
+                            <h5 class="mb-1">@cart.Product.Title</h5>
+                            <p class="mb-1 text-muted"><strong>Price:</strong> @cart.Product.Price.ToString("c")</p>
+                            <p class="mb-1 text-muted"><strong>Quantity:</strong> @cart.Count</p>
+                            <p class="mb-1 text-primary"><strong>Total:</strong> @cart.TotalPrice.ToString("c")</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-warning" role="alert">
+                        Product information is unavailable.
+                    </div>
+                }
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            Your shopping cart is empty.
+        </div>
+    }
+
+    <div class="mt-4">
+        <h4 class="mb-3">Checkout</h4>
+        <form method="post" class="p-3 border rounded shadow-sm">
+            <div class="mb-3">
+                <label asp-for="@Model.Order.Address" class="form-label">Address:</label>
+                <input asp-for="@Model.Order.Address" class="form-control" placeholder="Enter your address" />
+                <span asp-validation-for="@Model.Order.Address" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Check Out</button>
+        </form>
+    </div>
+</div>
