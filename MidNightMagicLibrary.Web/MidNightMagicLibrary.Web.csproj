@@ -17,6 +17,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.4" />
+    <PackageReference Include="Stripe.net" Version="45.11.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +25,14 @@
     <ProjectReference Include="..\MidNightMagicLibrary.BusinessLogic\MidNightMagicLibrary.BusinessLogic.csproj" />
     <ProjectReference Include="..\MidNightMagicLibrary.DAL\MidNightMagicLibrary.DAL.csproj" />
     <ProjectReference Include="..\MidNightMagicLibrary.Models\MidNightMagicLibrary.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Order\OrderConfirmation.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Order\OrderConfirmation.cshtml" />
   </ItemGroup>
 
 </Project>

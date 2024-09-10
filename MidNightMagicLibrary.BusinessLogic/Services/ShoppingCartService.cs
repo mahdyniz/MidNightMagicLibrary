@@ -39,7 +39,7 @@ namespace MidNightMagicLibrary.BusinessLogic.Services
             return shoppingCart;
         }
 
-        public IEnumerable<ShoppingCart> GetAll()
+        public IEnumerable<ShoppingCart> GetAll(Expression<Func<ShoppingCart,bool>>? filter = null)
         {
             IEnumerable<ShoppingCart> allShoppingCarts = _unitOfWork.ShoppingCart.GetAll(includProperties: "Product,ApplicationUser");
             if (allShoppingCarts == null)

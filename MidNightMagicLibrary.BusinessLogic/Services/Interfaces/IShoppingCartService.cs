@@ -13,7 +13,7 @@ namespace MidNightMagicLibrary.BusinessLogic.Services.Interfaces
     {
         void Add(ShoppingCart shoppingCart);
         ShoppingCart Get(Expression<Func<ShoppingCart, bool>> filter);
-        IEnumerable<ShoppingCart> GetAll();
+        IEnumerable<ShoppingCart> GetAll(Expression<Func<ShoppingCart, bool>>? filter = null);
         void Update(ShoppingCart shoppingCart);
         void Remove(ShoppingCart shoppingCart);
         void RemoveRange(IEnumerable<ShoppingCart> shoppingCart);

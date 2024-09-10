@@ -35,10 +35,14 @@
             Your shopping cart is empty.
         </div>
     }
-
     <div class="mt-4">
         <h4 class="mb-3">Checkout</h4>
-        <form method="post" class="p-3 border rounded shadow-sm">
+        <form method="post" asp-controller="Order" asp-action="CreateOrder" class="p-3 border rounded shadow-sm">
+            <div class="mb-3">
+                <label asp-for="@Model.Order.Name" class="form-label">Full Name:</label>
+                <input asp-for="@Model.Order.Name" class="form-control" placeholder="Enter your name" />
+                <span asp-validation-for="@Model.Order.Name" class="text-danger"></span>
+            </div>
             <div class="mb-3">
                 <label asp-for="@Model.Order.Address" class="form-label">Address:</label>
                 <input asp-for="@Model.Order.Address" class="form-control" placeholder="Enter your address" />
