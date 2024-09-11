@@ -103,7 +103,6 @@ namespace MidNightMagicLibrary.Web.Controllers
 
             Response.Headers.Add("Location", session.Url);
             return new StatusCodeResult(303);
-
         }
         public IActionResult OrderConfirmation(int id)
         {

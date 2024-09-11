@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using MidNightMagicLibrary.Models;
 
-namespace MidNightMagicLibrary.Admin
+namespace MidNightMagicLibrary.Web
 {
     public class Program
     {
