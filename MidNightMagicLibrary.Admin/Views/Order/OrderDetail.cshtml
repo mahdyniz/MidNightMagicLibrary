@@ -24,7 +24,15 @@
                 </div>
                 <div class="col-md-6">
                     <strong>Order Status:</strong>
-                    <span class="badge @(Model.Order.OrderStatus == "Processing" ? "bg-info" : "bg-secondary")">@Model.Order.OrderStatus</span>
+                    <span class="badge badge-lg @(Model.Order.OrderStatus switch
+                    {
+                        "Pending" => "bg-warning",
+                        "Approved" => "bg-info",
+                        "Processing" => "bg-primary",
+                        "Shipping" => "bg-secondary",
+                        "Delivered" => "bg-success",
+                        _ => "bg-secondary"
+                    })">@Model.Order.OrderStatus</span>
                 </div>
             </div>
         </div>
@@ -66,13 +74,12 @@
         </div>
     </div>
 
-    <!-- Action Buttons -->
+    <!-- Action Buttons for Order Progress -->
     <div class="text-center mt-4">
         @if (Model.Order.OrderStatus == "Pending")
         {
             <form method="post" asp-controller="Order" asp-action="ApproveOrder" class="d-inline">
                 <input asp-for="@Model.Order.Id" type="hidden" />
-                <input asp-for="@Model.Order.OrderStatus" type="hidden" />
                 <button type="submit" class="btn btn-primary">Approve Order</button>
             </form>
         }
@@ -80,7 +87,6 @@
         {
             <form method="post" asp-controller="Order" asp-action="ProcessOrder" class="d-inline">
                 <input asp-for="@Model.Order.Id" type="hidden" />
-                <input asp-for="@Model.Order.OrderStatus" type="hidden" />
                 <button type="submit" class="btn btn-primary">Start Processing</button>
             </form>
         }
@@ -88,7 +94,6 @@
         {
             <form method="post" asp-controller="Order" asp-action="ShipOrder" class="d-inline">
                 <input asp-for="@Model.Order.Id" type="hidden" />
-                <input asp-for="@Model.Order.OrderStatus" type="hidden" />
                 <button type="submit" class="btn btn-primary">Ship Order</button>
             </form>
         }
@@ -96,8 +101,7 @@
         {
             <form method="post" asp-controller="Order" asp-action="DeliverOrder" class="d-inline">
                 <input asp-for="@Model.Order.Id" type="hidden" />
-                <input asp-for="@Model.Order.OrderStatus" type="hidden" />
-                <button type="submit" class="btn btn-primary">Deliver Order</button>
+                <button type="submit" class="btn btn-primary">Mark as Delivered</button>
             </form>
         }
         <a asp-controller="Order" asp-action="CancelOrder" asp-route-orderId="@Model.Order.Id" class="btn btn-danger ms-3">Cancel Order</a>

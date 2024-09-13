@@ -4,7 +4,6 @@ using MidNightLibrary.Utility;
 using MidNightMagicLibrary.BusinessLogic.Services.Interfaces;
 using MidNightMagicLibrary.Models;
 using MidNightMagicLibrary.Models.ViewModels;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MidNightMagicLibrary.Admin.Controllers
 {
@@ -13,20 +12,22 @@ namespace MidNightMagicLibrary.Admin.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly IOrderItemService _orderItemService;
-        
-        public OrderController(IOrderService orderService, IOrderItemService orderItemSerivce)
+
+        public OrderController(IOrderService orderService, IOrderItemService orderItemService)
         {
             _orderService = orderService;
-            _orderItemService = orderItemSerivce;
+            _orderItemService = orderItemService;
         }
+
         public IActionResult Index()
         {
             var allOrders = _orderService.GetAll();
             return View(allOrders);
         }
+
         public IActionResult OrderDetail(int orderId)
         {
-            OrderVM orderVM = new OrderVM
+            var orderVM = new OrderVM
             {
                 Order = _orderService.Get(u => u.Id == orderId),
                 OrderItems = _orderItemService.GetAll(u => u.OrderId == orderId),
@@ -35,58 +36,53 @@ namespace MidNightMagicLibrary.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult ApproveOrder(OrderVM orderVM)
+        public IActionResult UpdateOrderStatus(OrderVM orderVM, string status)
         {
-            Order order = _orderService.Get(u => u.Id == orderVM.Order.Id);
-            orderVM.Order = order;
+            var order = _orderService.Get(u => u.Id == orderVM.Order.Id);
+            if (order == null)
+            {
+                return NotFound();
+            }
 
-            orderVM.Order.OrderStatus = SD.OrderApproved;
-            _orderService.Update(orderVM.Order);
+            order.OrderStatus = status;
+            _orderService.Update(order);
 
             return RedirectToAction(nameof(OrderDetail), new { orderId = order.Id });
+        }
+
+        [HttpPost]
+        public IActionResult ApproveOrder(OrderVM orderVM)
+        {
+            return UpdateOrderStatus(orderVM, SD.OrderApproved);
         }
 
         [HttpPost]
         public IActionResult ProcessOrder(OrderVM orderVM)
         {
-            Order order = _orderService.Get(u => u.Id == orderVM.Order.Id);
-            orderVM.Order = order;
-
-            orderVM.Order.OrderStatus = SD.OrderProcessing;
-            _orderService.Update(orderVM.Order);
-
-            return RedirectToAction(nameof(OrderDetail), new { orderId = order.Id });
+            return UpdateOrderStatus(orderVM, SD.OrderProcessing);
         }
 
         [HttpPost]
         public IActionResult ShipOrder(OrderVM orderVM)
         {
-            Order order = _orderService.Get(u => u.Id == orderVM.Order.Id);
-            orderVM.Order = order;
-
-            orderVM.Order.OrderStatus = SD.OrderShipping;
-            _orderService.Update(orderVM.Order);
-
-            return RedirectToAction(nameof(OrderDetail), new { orderId = order.Id });
+            return UpdateOrderStatus(orderVM, SD.OrderShipping);
         }
+
         [HttpPost]
         public IActionResult DeliverOrder(OrderVM orderVM)
         {
-            Order order = _orderService.Get(u => u.Id == orderVM.Order.Id);
-            orderVM.Order = order;
-
-            orderVM.Order.OrderStatus = SD.OrderDelivered;
-            _orderService.Update(orderVM.Order);
-
-            return RedirectToAction(nameof(OrderDetail), new { orderId = order.Id });
+            return UpdateOrderStatus(orderVM, SD.OrderDelivered);
         }
 
         public IActionResult CancelOrder(int orderId)
         {
-            Order order = _orderService.Get(u => u.Id == orderId);
+            var order = _orderService.Get(u => u.Id == orderId);
+            if (order == null)
+            {
+                return NotFound();
+            }
 
             _orderService.Remove(order);
-
             return RedirectToAction(nameof(Index));
         }
     }
