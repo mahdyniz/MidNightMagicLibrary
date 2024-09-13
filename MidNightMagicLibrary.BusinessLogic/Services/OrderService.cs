@@ -82,6 +82,13 @@ namespace MidNightMagicLibrary.BusinessLogic.Services
             _unitOfWork.Order.Update(order);
             _unitOfWork.Save();
         }
-        
+        public IEnumerable<SelectListItem> GetOrderStatusSelectList()
+        {
+            return _unitOfWork.Order.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.OrderStatus,
+                Value = u.OrderStatus.ToString()
+            });
+        }
     }
 }

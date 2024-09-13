@@ -12,7 +12,7 @@ namespace MidNightMagicLibrary.BusinessLogic.Services.Interfaces
     {
         void Add(OrderItem orderItem);
         OrderItem Get(Expression<Func<OrderItem, bool>> filter);
-        IEnumerable<OrderItem> GetAll();
+        IEnumerable<OrderItem> GetAll(Expression<Func<OrderItem, bool>>? filter = null);
         void Update(OrderItem orderItem);
         void Remove(OrderItem orderItem);
         void RemoveRange(IEnumerable<OrderItem> orderItem);

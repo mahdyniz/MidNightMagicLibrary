@@ -1,4 +1,5 @@
-﻿using MidNightMagicLibrary.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using MidNightMagicLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,6 @@ namespace MidNightMagicLibrary.BusinessLogic.Services.Interfaces
         void Update(Order order);
         void Remove(Order order);
         void RemoveRange(IEnumerable<Order> order);
-
+        public IEnumerable<SelectListItem> GetOrderStatusSelectList();
     }
 }

@@ -39,7 +39,7 @@ namespace MidNightMagicLibrary.BusinessLogic.Services
             return orderItem;
         }
 
-        public IEnumerable<OrderItem> GetAll()
+        public IEnumerable<OrderItem> GetAll(Expression<Func<OrderItem, bool>>? filter = null)
         {
             IEnumerable<OrderItem> allOrderItems = _unitOfWork.OrderItem.GetAll(includProperties: "Order,Product");
             if (allOrderItems == null)

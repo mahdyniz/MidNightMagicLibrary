@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using MidNightLibrary.Utility;
@@ -8,6 +9,8 @@ using MidNightMagicLibrary.Models.ViewModels;
 
 namespace MidNightMagicLibrary.Admin.Controllers
 {
+    [Authorize]
+
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
