@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components.Endpoints;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +26,18 @@ namespace MidNightLibrary.Utility
         public static string PaymentApproved { get; set; } = "Approved";
 
 
+        public static IEnumerable<SelectListItem> GetOrderStatusList()
+        {
+            return new List<SelectListItem>
+            {
+                new SelectListItem { Value = "Pending", Text = "Pending" },
+                new SelectListItem { Value = "Approved", Text = "Approved" },
+                new SelectListItem { Value = "Processing", Text = "Processing" },
+                new SelectListItem { Value = "Shipping", Text = "Shipping" },
+                new SelectListItem { Value = "Delivered", Text = "Delivered" }
+            };
 
+        }
 
-    }
+    }   
 }

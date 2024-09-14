@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MidNightLibrary.Utility;
 using MidNightMagicLibrary.BusinessLogic.Services.Interfaces;
 using MidNightMagicLibrary.Models;
@@ -19,9 +20,17 @@ namespace MidNightMagicLibrary.Admin.Controllers
             _orderItemService = orderItemService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? orderStatus)
         {
             var allOrders = _orderService.GetAll();
+
+            if (!string.IsNullOrEmpty(orderStatus))
+            {
+                allOrders = allOrders.Where(o => o.OrderStatus.Equals(orderStatus, StringComparison.OrdinalIgnoreCase));
+            }
+            ViewBag.OrderStatuses = new SelectList(SD.GetOrderStatusList(), "Value", "Text");
+
+
             return View(allOrders);
         }
 

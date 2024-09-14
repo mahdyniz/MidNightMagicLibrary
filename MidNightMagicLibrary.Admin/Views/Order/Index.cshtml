@@ -1,29 +1,41 @@
 ﻿@using MidNightMagicLibrary.Models
 @model IEnumerable<Order>
 
-<div class="container mt-4">
-    <h2 class="mb-4 text-center">All Orders</h2>
+<form asp-action="Index" method="get">
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">All Orders</h2>
 
-    <div class="row">
-        @foreach (var order in Model)
-        {
-            <div class="col-md-6 mb-4">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title"><strong>Order Name:</strong> @order.Name</h5>
-                        <p class="card-text">
-                            <strong>Payment Status:</strong>
-                            <span class="badge bg-@(order.PaymentStatus == "Approved" ? "success" : (order.PaymentStatus == "Pending" ? "warning" : "danger"))">
-                                @order.PaymentStatus
-                            </span><br />
-                            <strong>Order Status:</strong> <span class="badge bg-info">@order.OrderStatus</span><br />
-                            <strong>Order Date:</strong> @(order.OrderDate.HasValue ? order.OrderDate.Value.ToString("dd MMM yyyy") : "N/A")<br />
-                            <strong>Total:</strong> @order.OrderTotal.ToString("c")
-                        </p>
-                        <a asp-controller="Order" asp-action="OrderDetail" asp-route-orderId="@order.Id" class="btn btn-primary">View Details</a>
-                    </div>
+        <div class="row mb-4">
+            <div class="col-md-6 offset-md-3">
+                <div class="input-group">
+                    @Html.DropDownList("OrderStatus", (SelectList)ViewBag.OrderStatuses, "Select Order Status", new { @class = "form-select" })
+                    <button type="submit" class="btn btn-primary ms-2">Apply Filters</button>
                 </div>
             </div>
-        }
+        </div>
+
+        <div class="row">
+            @foreach (var order in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-lg border-light">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3"><strong>Order Name:</strong> @order.Name</h5>
+                            <p class="card-text mb-3">
+                                <strong>Payment Status:</strong>
+                                <span class="badge @(order.PaymentStatus == "Approved" ? "bg-success" : (order.PaymentStatus == "Pending" ? "bg-warning" : "bg-danger"))">
+                                    @order.PaymentStatus
+                                </span><br />
+                                <strong>Order Status:</strong>
+                                <span class="badge bg-info">@order.OrderStatus</span><br />
+                                <strong>Order Date:</strong> @(order.OrderDate.HasValue ? order.OrderDate.Value.ToString("dd MMM yyyy") : "N/A")<br />
+                                <strong>Total:</strong> @order.OrderTotal.ToString("c")
+                            </p>
+                            <a asp-controller="Order" asp-action="OrderDetail" asp-route-orderId="@order.Id" class="btn btn-primary w-100">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
-</div>
+</form>
