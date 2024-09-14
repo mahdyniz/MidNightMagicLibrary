@@ -1,0 +1,53 @@
+﻿@using MidNightMagicLibrary.Models
+@model IEnumerable<Order>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4 display-6 fw-bold text-primary">Your Order History</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center">
+            <strong>No orders found!</strong> You haven't placed any orders yet.
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var order in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary fw-bold">Order ID: @order.Id</h5>
+                            <p class="card-text mb-2">
+                                <strong>Name:</strong> @order.Name
+                            </p>
+                            <p class="card-text mb-2">
+                                <strong>Address:</strong> @order.Address
+                            </p>
+                            <p class="card-text mb-2">
+                                <strong>Total:</strong> @order.OrderTotal.ToString("c")
+                            </p>
+                            <p class="card-text mb-2">
+                                <strong>Status:</strong>
+                                <span class="badge rounded-pill @(order.OrderStatus switch
+                                {
+                                    "Pending" => "bg-warning text-dark",
+                                    "Approved" => "bg-info text-white",
+                                    "Processing" => "bg-primary text-white",
+                                    "Shipping" => "bg-secondary text-white",
+                                    "Delivered" => "bg-success text-white",
+                                    _ => "bg-secondary text-white"
+                                })">
+                                    @order.OrderStatus
+                                </span>
+                            </p>
+
+                            <a asp-controller="Order" asp-action="OrderDetails" asp-route-orderId="@order.Id" class="btn btn-outline-primary rounded-pill w-100 mt-3 shadow-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

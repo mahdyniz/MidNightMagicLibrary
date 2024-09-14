@@ -8,7 +8,6 @@ using MidNightMagicLibrary.Models.ViewModels;
 using Stripe;
 using Stripe.Checkout;
 using System.Security.Claims;
-using static System.Net.WebRequestMethods;
 
 namespace MidNightMagicLibrary.Web.Controllers
 {
@@ -129,5 +128,27 @@ namespace MidNightMagicLibrary.Web.Controllers
             _shoppingCartService.RemoveRange(shoppingCarts);
             return View(id);
         }
+        public IActionResult OrderHistory()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var allOrders = _orderService.GetAll();
+            var usersOrders = allOrders.Where(u => u.ApplicationUserId == userId);
+
+            IEnumerable<Order> orders = usersOrders;
+
+            return View(orders);
+        }
+        public IActionResult OrderDetails(int orderId)
+        {
+            OrderVM orderVM = new OrderVM
+            {
+                Order = _orderService.Get(u => u.Id ==  orderId),
+                OrderItems = _orderItemService.GetAll(u => u.OrderId == orderId)
+            };
+
+            return View(orderVM);
+        }
+
     }
 }

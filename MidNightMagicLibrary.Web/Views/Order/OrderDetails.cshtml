@@ -1,0 +1,89 @@
+﻿@using MidNightMagicLibrary.Models.ViewModels
+@model OrderVM
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4 display-6 fw-bold text-primary">Order Details</h2>
+
+    <!-- Order Information -->
+    <div class="card mb-4 shadow border-0 rounded-4">
+        <div class="card-header bg-primary text-white rounded-top-4">
+            <h5 class="mb-0 fw-semibold">Order Summary</h5>
+        </div>
+        <div class="card-body">
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <p class="mb-1 text-muted"><strong>Order ID:</strong></p>
+                    <p class="fw-bold">@Model.Order.Id</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-1 text-muted"><strong>Order Date:</strong></p>
+                    <p class="fw-bold">@Model.Order.OrderDate?.ToString("dd MMM yyyy")</p>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <p class="mb-1 text-muted"><strong>Customer Name:</strong></p>
+                    <p class="fw-bold">@Model.Order.Name</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-1 text-muted"><strong>Payment Status:</strong></p>
+                    <span class="badge rounded-pill @(Model.Order.PaymentStatus == "Paid" ? "bg-success" : "bg-warning")">
+                        @Model.Order.PaymentStatus
+                    </span>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <p class="mb-1 text-muted"><strong>Order Status:</strong></p>
+                    <span class="badge rounded-pill @(Model.Order.OrderStatus switch
+                    {
+                        "Pending" => "bg-warning text-dark",
+                        "Approved" => "bg-info text-white",
+                        "Processing" => "bg-primary text-white",
+                        "Shipping" => "bg-secondary text-white",
+                        "Delivered" => "bg-success text-white",
+                        _ => "bg-secondary text-white"
+                    })">
+                        @Model.Order.OrderStatus
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Information -->
+    <div class="card mb-4 shadow border-0 rounded-4">
+        <div class="card-header bg-secondary text-white rounded-top-4">
+            <h5 class="mb-0 fw-semibold">Products in Order</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderItems)
+                    {
+                        <tr>
+                            <td>@item.Product.Title</td>
+                            <td>@item.Price.ToString("c")</td>
+                            <td>@item.Count</td>
+                            <td>@((item.Price * item.Count).ToString("c"))</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot class="table-light">
+                    <tr>
+                        <td colspan="3" class="text-end"><strong>Order Total:</strong></td>
+                        <td><strong>@Model.Order.OrderTotal.ToString("c")</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
