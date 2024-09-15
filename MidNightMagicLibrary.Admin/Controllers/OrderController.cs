@@ -28,8 +28,7 @@ namespace MidNightMagicLibrary.Admin.Controllers
             {
                 allOrders = allOrders.Where(o => o.OrderStatus.Equals(orderStatus, StringComparison.OrdinalIgnoreCase));
             }
-            ViewBag.OrderStatuses = new SelectList(SD.GetOrderStatusList(), "Value", "Text");
-
+            ViewBag.OrderStatusList = new SelectList(SD.GetOrderStatusList(), "Value", "Text");
 
             return View(allOrders);
         }

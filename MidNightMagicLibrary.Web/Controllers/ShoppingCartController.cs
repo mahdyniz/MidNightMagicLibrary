@@ -13,9 +13,11 @@ namespace MidNightMagicLibrary.Web.Controllers
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCartService _shoppingCartService;
-        public ShoppingCartController(IShoppingCartService shoppingCartService)
+        private readonly IProductService _productService;
+        public ShoppingCartController(IShoppingCartService shoppingCartService, IProductService productService)
         {
             _shoppingCartService = shoppingCartService;
+            _productService = productService;
         }
         public IActionResult Index()
         {
@@ -40,6 +42,13 @@ namespace MidNightMagicLibrary.Web.Controllers
         [HttpPost]
         public IActionResult Create(Product product)
         {
+            var productFromDb = _productService.Get(u => u.Id == product.Id);
+
+            if (product.Count > productFromDb.Quantity)
+            {
+                return View("ProductQuantityCheck", productFromDb);
+            }
+
             var allShoppingCarts = _shoppingCartService.GetAll();
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

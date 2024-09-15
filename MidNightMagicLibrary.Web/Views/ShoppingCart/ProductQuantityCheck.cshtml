@@ -1,0 +1,19 @@
+﻿@using MidNightMagicLibrary.Models
+@model Product
+
+<div class="container mt-5">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <h4 class="alert-heading">Stock Alert!</h4>
+        <p class="mb-0">Unfortunately, there is not enough of this item in stock.</p>
+        @if (Model.Quantity < 10)
+        {
+            <hr>
+            <p class="mb-0">We currently have only <strong>@Model.Quantity</strong> item(s) available.</p>
+        }
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="text-center mt-4">
+        <a asp-controller="Home" asp-action="ProductDetail" asp-route-productId="@Model.Id" class="btn btn-primary">Return to Product</a>
+    </div>
+</div>

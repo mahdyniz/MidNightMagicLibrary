@@ -8,7 +8,7 @@
         <div class="row mb-4">
             <div class="col-md-6 offset-md-3">
                 <div class="input-group">
-                    @Html.DropDownList("OrderStatus", (SelectList)ViewBag.OrderStatuses, "Select Order Status", new { @class = "form-select" })
+                    @Html.DropDownList("OrderStatus", (SelectList)ViewBag.OrderStatusList, "Select Order Status", new { @class = "form-select" })
                     <button type="submit" class="btn btn-primary ms-2">Apply Filters</button>
                 </div>
             </div>
