@@ -14,6 +14,7 @@ namespace MidNightMagicLibrary.Web.Controllers
     {
         private readonly IShoppingCartService _shoppingCartService;
         private readonly IProductService _productService;
+        //test
         public ShoppingCartController(IShoppingCartService shoppingCartService, IProductService productService)
         {
             _shoppingCartService = shoppingCartService;
